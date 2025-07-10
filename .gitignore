@@ -1,6 +1,8 @@
 
 /src/generated/prisma
 
+.env
+
 # Dependencies
 /node_modules
 
