@@ -1,0 +1,143 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int         @id @default(autoincrement())
+  email           String      @unique
+  password        String
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  resetToken      String?   
+  resetTokenExp   DateTime? 
+  profile         Profile?
+
+  posts           Post[]
+  comments        Comment[]
+  notifications   Notification[]
+  activityLogs    UserActivityLog[]
+
+  followers       Follow[]    @relation("UserFollowers")
+  following       Follow[]    @relation("UserFollowing")
+
+  Notification Notification[] @relation("NotificationFromUser")
+
+
+  PostLike PostLike[]
+  CommentLike CommentLike[]
+}
+
+model Profile {
+  id         Int     @id @default(autoincrement())
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int     @unique
+  username   String  @unique
+  name       String?
+  bio        String?
+  avatarUrl  String?
+  backgroundUrl String?
+ 
+}
+
+model Follow {
+  id          Int     @id @default(autoincrement())
+  follower    User    @relation("UserFollowing", fields: [followerId], references: [id], onDelete: Cascade)
+  followerId  Int
+  following   User    @relation("UserFollowers", fields: [followingId], references: [id], onDelete: Cascade)
+  followingId Int
+  createdAt   DateTime @default(now())
+
+  @@unique([followerId, followingId])
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    Int
+  content     String?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  likes       PostLike[]
+  comments    Comment[]
+
+}
+
+model PostLike {
+  id        Int      @id @default(autoincrement())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  createdAt DateTime @default(now())
+
+  @@unique([postId, userId])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    Int
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  Int
+  content   String
+  likes       CommentLike[]
+  createdAt DateTime @default(now())
+}
+
+model CommentLike {
+  id        Int      @id @default(autoincrement())
+  comment     Comment     @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  createdAt DateTime @default(now())
+
+  @@unique([commentId, userId])
+}
+
+model Notification {
+  id          Int       @id @default(autoincrement())
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  type        NotificationType
+  message     String
+  fromUser    User?     @relation("NotificationFromUser", fields: [fromUserId], references: [id], onDelete: Cascade)
+  fromUserId  Int?
+  isRead      Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+}
+
+enum NotificationType {
+  FOLLOW
+  LIKE
+  COMMENT
+  MENTION
+  MESSAGE
+}
+
+model UserActivityLog {
+  id        Int       @id @default(autoincrement())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  activity  String
+  metadata  Json?
+  createdAt DateTime  @default(now())
+}
+
+
+
+
+
