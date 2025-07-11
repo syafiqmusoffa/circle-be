@@ -48,15 +48,9 @@ app.use("/api", routerFollows);
 app.use("/api", routerLikes);
 app.use("/api", routerComments);
 
-const uploadPath = path.join(__dirname, "src/uploads");
-
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath, { recursive: true });
-}
-
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
-});
+// app.listen(process.env.PORT, () => {
+//   console.log(`Server is running on port ${process.env.PORT}`);
+// });
 
 
 
