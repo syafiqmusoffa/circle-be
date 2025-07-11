@@ -1,7 +1,7 @@
 {
   "builds": [
     {
-      "src": "src/index.ts",
+      "src": "src/app.ts",
       "use": "@vercel/node",
       "config": {
         "includeFiles": ["config/**"]
@@ -11,7 +11,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "src/index.ts"
+      "dest": "src/app.ts"
     }
   ]
 }
