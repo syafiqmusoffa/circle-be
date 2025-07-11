@@ -22,7 +22,6 @@ export const getProfiles = async (req: Request, res: Response) => {
         },
       },
     });
-    const profilesWithoutId = profileUser.map(({ id, ...rest }) => rest);
     res.status(200).json(profileUser);
   } catch (error) {
     res.status(500).json({ error: "Server error" });
@@ -169,7 +168,8 @@ export const updateProfiles = async (req: Request, res: Response) => {
 
 export const updateUsername = async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id);
+    const id: number = parseInt(req.params.id);
+    
     const { username } = req.body;
 
     const result = await prisma.profile.update({
@@ -268,7 +268,7 @@ export const searchUser = async (req: Request, res: Response) => {
     },
   });
 
-  const result = users.map((user) => ({
+  const result = users.map((user: any) => ({
     ...user,
     isFollowed: user.followers.length > 0,
   }));

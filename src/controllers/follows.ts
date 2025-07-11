@@ -104,7 +104,7 @@ export const getFollowers = async (req: Request, res: Response) => {
         },
       },
     });
-    const formatted = user?.followers.map((f) => ({
+    const formatted = user?.followers.map((f:any) => ({
       id: f.follower.id,
       email: f.follower.email,
       profile: f.follower.profile,
@@ -155,7 +155,7 @@ export const getFollowing = async (req: Request, res: Response) => {
       },
     });
 
-    const formatted = user?.following.map((f) => ({
+    const formatted = user?.following.map((f:any) => ({
       id: f.following.id,
       email: f.following.email,
       profile: f.following.profile,

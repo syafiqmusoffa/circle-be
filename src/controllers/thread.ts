@@ -32,7 +32,7 @@ export const getThreads = async (req: Request, res: Response) => {
       take: 10,
     });
 
-    const result = threads.map((thread) => ({
+    const result = threads.map((thread:any) => ({
       id: thread.id,
       content: thread.content,
       imageUrl: thread.imageUrl,
@@ -85,7 +85,7 @@ export const getThreadById = async (req: Request, res: Response) => {
     }
 
     const liked = user
-      ? thread.likes.some((like) => like.userId === user.id)
+      ? thread.likes.some((like:any) => like.userId === user.id)
       : false;
 
     res.status(200).json({
@@ -276,7 +276,7 @@ export async function myThread(req: Request, res: Response) {
       res.status(404).json({ message: "thread not found" });
       return;
     }
-    const result = threads.map((thread) => ({
+    const result = threads.map((thread:any) => ({
       id: thread.id,
       content: thread.content,
       imageUrl: thread.imageUrl,
@@ -337,7 +337,7 @@ export async function OtherThread(req: Request, res: Response) {
       res.status(404).json({ message: "thread not found" });
       return;
     }
-    const result = threads.map((thread) => ({
+    const result = threads.map((thread:any) => ({
       id: thread.id,
       content: thread.content,
       imageUrl: thread.imageUrl,
