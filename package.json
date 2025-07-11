@@ -7,7 +7,7 @@
     "dev": "ts-node-dev --respawn src/app.ts",
     "build": "prisma generate && tsc",
     "vercel-build": "prisma generate && tsc",
-    "start":"node dist/index.js"
+    "start": "node dist/app.js"
   },
   "prisma": {
     "seed": "ts-node src/prisma/seed.ts"
@@ -18,7 +18,9 @@
   "description": "",
   "dependencies": {
     "@faker-js/faker": "^9.8.0",
-    "@prisma/client": "^6.8.2",
+    "@neondatabase/serverless": "^1.0.1",
+    "@prisma/adapter-neon": "^6.11.1",
+    "@prisma/client": "^6.11.1",
     "@types/joi": "^17.2.2",
     "@types/nodemailer": "^6.4.17",
     "@vercel/node": "^5.3.4",
@@ -40,6 +42,7 @@
     "nodemailer": "^7.0.4",
     "rimraf": "^6.0.1",
     "streamifier": "^0.1.1",
+    "ws": "^8.18.3",
     "zod": "^3.25.28"
   },
   "devDependencies": {
@@ -53,7 +56,8 @@
     "@types/multer": "^1.4.13",
     "@types/node": "^22.15.23",
     "@types/streamifier": "^0.1.2",
-    "prisma": "^6.8.2",
+    "@types/ws": "^8.18.1",
+    "prisma": "^6.11.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"

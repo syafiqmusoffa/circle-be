@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { prisma } from "../prisma/client";
-import { date } from "joi";
+import  {prisma } from "../prisma/client";
 import cloudinary from "../utils/cloudinary";
 import { profileSchema } from "../validations/profile";
 

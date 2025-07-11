@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
 import { loginSchema, registerSchema, resetSchema } from "../validations/auth";
-import { prisma } from "../prisma/client";
 import bcrypt from "bcrypt";
 import { loginUser } from "../sevices/auth";
 import { transporter } from "../utils/transporter";
 import crypto from "crypto";
-
+import {prisma} from "../prisma/client"
 export async function handleRegister(req: Request, res: Response) {
   try {
     const { error } = registerSchema.validate(req.body);
