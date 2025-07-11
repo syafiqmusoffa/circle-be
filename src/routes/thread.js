@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.threadRoute = void 0;
+const express_1 = __importDefault(require("express"));
+const thread_1 = require("../controllers/thread");
+const Auth_1 = require("../midlewares/Auth");
+const upload_1 = __importDefault(require("../midlewares/upload"));
+// import upload from "../utils/multer";
+// import { uploadImage } from "../utils/multer";
+const router = express_1.default.Router();
+exports.threadRoute = router;
+router.get("/threads", Auth_1.authenticate, thread_1.getThreads);
+router.get("/my-threads", Auth_1.authenticate, thread_1.myThread);
+router.get("/user-thread/:username", Auth_1.authenticate, thread_1.OtherThread);
+router.get("/thread/:id", Auth_1.authenticate, thread_1.getThreadById);
+router.delete("/delete-thread/:id", Auth_1.authenticate, thread_1.deletedThread);
+router.post("/thread", Auth_1.authenticate, upload_1.default.single("imageUrl"), thread_1.addThread);
+router.put("/edit-thread/:id", Auth_1.authenticate, upload_1.default.single("imageUrl"), thread_1.editThread);
