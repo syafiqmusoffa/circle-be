@@ -54,8 +54,8 @@ if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });
 }
 
-// app.listen(process.env.PORT, () => {
-//   console.log(`Server is running on port ${process.env.PORT}`);
-// });
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
+});
 
-export default app;
+// export default index;
