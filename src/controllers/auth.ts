@@ -80,6 +80,7 @@ export async function handleLogin(req: Request, res: Response) {
     const email = req.body.email?.toLowerCase();
 
     const result = await loginUser(email, password);
+    
     res.status(200).json({ message: "Login success", ...result });
   } catch (err: any) {
     res.status(401).json({ message: err.message });

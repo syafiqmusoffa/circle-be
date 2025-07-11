@@ -2,10 +2,8 @@
   "builds": [
     {
       "src": "src/app.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["config/**"]
-      }
+      "use": "@vercel/node"
+      
     }
   ],
   "routes": [
